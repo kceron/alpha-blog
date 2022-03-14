@@ -10,16 +10,34 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    @article = Article.new
+  end
 
+  def edit
+    @article = Article.find(params[:id])
   end
 
   def create
     # render plain: params[:article] # to see plain article params 
     @article = Article.new(params.require(:article).permit(:title, :description))
     # render plain: @article.inspect # too see @article details
-    @article.save
-    # redirect_to article_path(@article) # redirect to show. shortcut below
-    redirect_to @article
+    if @article.save
+      # redirect_to article_path(@article) # redirect to show. shortcut below
+      flash[:notice] = "Article was created successfully"
+      redirect_to @article
+    else 
+      render 'new'
+    end
   end 
+
+  def update
+    @article = Article.find(params[:id])
+    if @article.update(params.require(:article).permit(:title, :description))
+      flash[:notice] = "Article was updated successfully"
+      redirect_to @article
+    else
+      render 'edit'
+    end
+  end
 
 end
