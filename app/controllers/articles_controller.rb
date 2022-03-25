@@ -19,6 +19,7 @@ class ArticlesController < ApplicationController
   def create
     # render plain: params[:article] # to see plain article params 
     @article = Article.new(article_params)
+    @article.user = User.first 
     # render plain: @article.inspect # too see @article details
     if @article.save
       # redirect_to article_path(@article) # redirect to show. shortcut below
