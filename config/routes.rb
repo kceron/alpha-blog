@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   # post 'users', to: 'users#create'
   resources :users, except: [:new]
+  get 'login', to: 'sessions#new' # need to create a sessions controller for this
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 end
